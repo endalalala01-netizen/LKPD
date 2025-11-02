@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKPD Materi Tekanan Hidrostatis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        /* 为第一页添加背景图片 - 使用学校场景 */
+        #page1 {
+            background-image: url('https://z-cdn-media.chatglm.cn/files/e0052aed-d408-4845-b7c6-949306a18c28_pasted_image_1762070543802.png?auth_key=1762074206-4550c275bd7c48e7b3d302de1175107a-0-1b9522252461f1ce888b4886ef97707c');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        /* 为第二页添加背景图片 - 使用教室场景 */
+        #page2 {
+            background-image: url('https://z-cdn-media.chatglm.cn/files/ba2686dd-e8b1-4290-866f-78bc496476f6_pasted_image_1762065406017.png?auth_key=1762069020-9d704f81540a4c45861b4e2d20226a2b-0-657183894d4e2f54b64adf76bdb796fa');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        /* 为游戏页面添加背景图片 - 使用教室上课场景 */
+        #page7, #page8, #page9, #page10, #page11, #page12, #page13, #page14, #page15, #page16 {
+            background-image: url('https://z-cdn-media.chatglm.cn/files/6fc1d4a7-c5e7-4cfa-943a-c7d119d32656_pasted_image_1762065651741.png?auth_key=1762069266-af78565072f64908ab81e81ad89ec51d-0-03acb9b024b1e5afce96853733cfe668');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        /* 为第一页的内容添加半透明背景以提高可读性 */
+        #page1 .header {
+            background-color: rgba(52, 152, 219, 0.85);
+        }
+        
+        /* 为第二页的内容添加半透明背景以提高可读性 */
+        #page2 .header {
+            background-color: rgba(52, 152, 219, 0.85);
+        }
+        
+        /* 为第二页的容器添加半透明背景以提高可读性 */
+        #page2 .container {
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* 为游戏页面的内容添加半透明背景 */
+        #page7 .header, #page8 .header, #page9 .header, #page10 .header, #page11 .header, #page12 .header, #page13 .header, #page14 .header, #page15 .header, #page16 .header {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+        
+        /* 为游戏页面的容器添加半透明背景以提高可读性 */
+        #page7 .game-container, #page8 .game-container, #page9 .game-container, #page10 .game-container, #page11 .game-container, #page12 .game-container, #page13 .game-container, #page14 .game-container, #page15 .game-container, #page16 .game-container {
+            background-color: rgba(255, 255, 255, 0.92);
+        }
+        
+        /* 添加制作人信息的样式 */
+        .creator-info {
+            text-align: center;
+            margin: 30px auto;
+            padding: 15px 25px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 500px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .exit-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .exit-btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+        }
+        
+        .start-btn, .menu-btn, .nav-btn, .game-btn {
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .start-btn {
+            background-color: #2ecc71;
+            color: white;
+            font-size: 18px;
+            display: block;
+            margin: 50px auto;
+        }
+        
+        .start-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-3px);
+        }
+        
+        .menu-btn {
+            background-color: rgba(52, 152, 219, 0.9);
+            color: white;
+            font-size: 16px;
+            width: 250px;
+            margin: 15px auto;
+            display: block;
+        }
+        
+        .menu-btn:hover {
+            background-color: rgba(41, 128, 185, 0.9);
+            transform: translateY(-3px);
+        }
+        
+        .game-btn {
+            background-color: #e67e22;
+            color: white;
+            font-size: 18px;
+            width: 300px;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .game-btn:hover {
+            background-color: #d35400;
+            transform: translateY(-3px);
+        }
+        
+        .nav-btn {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .nav-btn:hover {
+            background-color: #8e44ad;
+        }
+        
+        .prev-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+        
+        .next-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        .comic-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .comic-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .comic-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-top-color: #ffffff;
+            border-bottom: 0;
+            margin-left: -15px;
+            margin-bottom: -15px;
+        }
+        
+        .character {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .character-img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin: 0 20px;
+        }
+        
+        .modal-content {
+            border-radius: 10px;
+        }
+        
+        .modal-header {
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .content-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .formula {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+        
+        .example {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .procedure {
+            counter-reset: step;
+        }
+        
+        .procedure li {
+            counter-increment: step;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .procedure li:before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* 游戏页面样式 */
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .game-question {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .game-image {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .game-input {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .game-input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .submit-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+        
+        .submit-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+        
+        .feedback {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .score-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .result-item.correct {
+            background-color: #d4edda;
+        }
+        
+        .result-item.incorrect {
+            background-color: #f8d7da;
+        }
+        
+        .game-characters {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        
+        .game-character {
+            text-align: center;
+        }
+        
+        .game-character img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+        
+        .game-character p {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        /* 卡片配对游戏样式 */
+        .timer-container {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .card {
+            aspect-ratio: 3/4;
+            background-color: #3498db;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .card.flipped {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            border: 2px solid #3498db;
+        }
+        
+        .card.matched {
+            background-color: #2ecc71;
+            color: white;
+            border: 2px solid #27ae60;
+        }
+        
+        .card.disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+        
+        .phase-indicator {
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .phase-content {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        
+        .game-instructions {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 8px;
+        }
+        
+        .study-material {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .formula-display {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 8px;
+        }
+        
+        .variable-table {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .variable-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .variable-table th, .variable-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .variable-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .variable-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        /* 猜词游戏样式 */
+        .word-description {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .hint-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #856404;
+        }
+        
+        .word-length {
+            font-size: 24px;
+            letter-spacing: 8px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        /* Game selection page specific styles */
+        .game-selection-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            gap: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Cover -->
+    <div id="page1" class="page active">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1>LKPD (Lembar Kerja Peserta Didik)</h1>
+            <h2>Materi Tekanan Hidrostatis</h2>
+        </div>
+        
+        <!-- 添加制作人信息 -->
+        <div class="creator-info">
+            <p></i> Dibuat oleh: </p>
+            <p></i> Brenda Nyanyi </p>
+            <p></i> Giscella Monggi</p>
+        </div>
+        
+        <button class="start-btn" onclick="showPage(2)">
+            <i class="fas fa-play"></i> Mulai
+        </button>
+    </div>
+    
+    <!-- Page 2: Menu -->
+    <div id="page2" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1>Menu LKPD</h1>
+            <h2>Tekanan Hidrostatis</h2>
+        </div>
+        
+        <div class="container">
+            <button class="menu-btn" onclick="showModal('capaian')">
+                <i class="fas fa-trophy"></i> Capaian Pembelajaran
+            </button>
+            
+            <button class="menu-btn" onclick="showModal('materi')">
+                <i class="fas fa-book"></i> Materi Tekanan Hidrostatis
+            </button>
+            
+            <button class="menu-btn" onclick="showModal('praktikum')">
+                <i class="fas fa-flask"></i> Praktikum Menggunakan PhET
+            </button>
+            
+            <button class="menu-btn" onclick="showModal('profil')">
+                <i class="fas fa-user"></i> Profil Pengembang
+            </button>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(1)">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        
+        <button class="nav-btn next-btn" onclick="showPage(3)">
+            Selanjutnya <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+    
+    <!-- Page 3: Comic 1 -->
+    <div id="page3" class="page">
+        <div class="header">
+            <h1>Percakapan Tentang Tekanan Hidrostatis</h1>
+        </div>
+        
+        <div class="comic-container">
+            <div class="character">
+                <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                <div class="comic-bubble">
+                    <p>Hai, apakah kamu tahu apa itu tekanan hidrostatis?</p>
+                </div>
+            </div>
+            
+            <div class="character">
+                <div class="comic-bubble">
+                    <p>Tentu saja! Tekanan hidrostatis adalah tekanan yang dialami oleh benda di dalam fluida (cairan atau gas) yang disebabkan oleh berat fluida di atasnya.</p>
+                </div>
+                <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+            </div>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(2)">
+            <i class="fas fa-arrow-left"></i> Sebelumnya
+        </button>
+        
+        <button class="nav-btn next-btn" onclick="showPage(4)">
+            Selanjutnya <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+    
+    <!-- Page 4: Comic 2 -->
+    <div id="page4" class="page">
+        <div class="header">
+            <h1>Percakapan Tentang Tekanan Hidrostatis</h1>
+        </div>
+        
+        <div class="comic-container">
+            <div class="character">
+                <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                <div class="comic-bubble">
+                    <p>Bisakah kamu memberikan contoh tekanan hidrostatis dalam kehidupan sehari-hari?</p>
+                </div>
+            </div>
+            
+            <div class="character">
+                <div class="comic-bubble">
+                    <p>Tentu! Misalnya, saat kita berenang di kolam, kita merasa tekanan di telinga saat menyelam lebih dalam. Itu adalah tekanan hidrostatis yang bekerja pada telinga kita.</p>
+                </div>
+                <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+            </div>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(3)">
+            <i class="fas fa-arrow-left"></i> Sebelumnya
+        </button>
+        
+        <button class="nav-btn next-btn" onclick="showPage(5)">
+            Selanjutnya <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+    
+    <!-- Page 5: Comic 3 -->
+    <div id="page5" class="page">
+        <div class="header">
+            <h1>Percakapan Tentang Tekanan Hidrostatis</h1>
+        </div>
+        
+        <div class="comic-container">
+            <div class="character">
+                <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                <div class="comic-bubble">
+                    <p>Apa rumus untuk menghitung tekanan hidrostatis?</p>
+                </div>
+            </div>
+            
+            <div class="character">
+                <div class="comic-bubble">
+                    <p>Rumusnya adalah P = ρ × g × h, di mana P adalah tekanan hidrostatis, ρ adalah massa jenis fluida, g adalah percepatan gravitasi, dan h adalah kedalaman.</p>
+                </div>
+                <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+            </div>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(4)">
+            <i class="fas fa-arrow-left"></i> Sebelumnya
+        </button>
+        
+        <button class="nav-btn next-btn" onclick="showPage(6)">
+            Selanjutnya <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+    
+    <!-- Page 6: Comic 4 -->
+    <div id="page6" class="page">
+        <div class="header">
+            <h1>Percakapan Tentang Tekanan Hidrostatis</h1>
+        </div>
+        
+        <div class="comic-container">
+            <div class="character">
+                <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                <div class="comic-bubble">
+                    <p>Terima kasih atas penjelasannya! Sekarang saya lebih memahami tentang tekanan hidrostatis.</p>
+                </div>
+            </div>
+            
+            <div class="character">
+                <div class="comic-bubble">
+                    <p>Sama-sama! Kita bisa belajar lebih banyak dengan melakukan praktikum menggunakan simulasi PhET. Mari kita coba!</p>
+                </div>
+                <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+            </div>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(5)">
+            <i class="fas fa-arrow-left"></i> Sebelumnya
+        </button>
+        
+        <button class="nav-btn next-btn" onclick="showPage(7)">
+            Selanjutnya <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+    
+    <!-- Page 7: Game Selection -->
+    <div id="page7" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1>Pilih Game</h1>
+            <h2>Tekanan Hidrostatis</h2>
+        </div>
+        
+        <div class="game-selection-container">
+            <button class="game-btn" onclick="showPage(8)">
+                <i class="fas fa-font"></i> Game 1: Tebak Kata
+            </button>
+            
+            <button class="game-btn" onclick="showPage(11)">
+                <i class="fas fa-layer-group"></i> Game 2: Kartu Memori
+            </button>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(6)">
+            <i class="fas fa-arrow-left"></i> Sebelumnya
+        </button>
+        
+        <button class="nav-btn next-btn" onclick="showPage(2)">
+            Kembali ke Menu <i class="fas fa-home"></i>
+        </button>
+    </div>
+    
+    <!-- Page 8: Game 1 Introduction -->
+    <div id="page8" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1><i class="fas fa-font"></i> Game 1: Tebak Kata</h1>
+            <h2>Tekanan Hidrostatis</h2>
+        </div>
+        
+        <div class="game-container">
+            <div class="game-characters">
+                <div class="game-character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan">
+                    <p>Siswa Perempuan</p>
+                </div>
+                <div class="game-character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki">
+                    <p>Siswa Laki-laki</p>
+                </div>
+            </div>
+            
+            <div class="comic-container">
+                <div class="character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                    <div class="comic-bubble">
+                        <p>Hai! Apakah kamu siap untuk bermain game tebak kata tentang tekanan hidrostatis?</p>
+                    </div>
+                </div>
+                
+                <div class="character">
+                    <div class="comic-bubble">
+                        <p>Tentu saja! Saya akan memberikan deskripsi tentang istilah-istilah yang berhubungan dengan tekanan hidrostatis, dan kamu harus menebak kata tersebut.</p>
+                    </div>
+                    <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+                </div>
+                
+                <div class="character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                    <div class="comic-bubble">
+                        <p>Menarik! Ada berapa pertanyaan yang akan kita jawab?</p>
+                    </div>
+                </div>
+                
+                <div class="character">
+                    <div class="comic-bubble">
+                        <p>Ada 4 pertanyaan. Setiap pertanyaan akan menunjukkan deskripsi tentang istilah tekanan hidrostatis. Kamu harus menebak kata tersebut dengan mengetik jawaban di kotak yang tersedia.</p>
+                    </div>
+                    <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+                </div>
+            </div>
+            
+            <button class="submit-btn" onclick="showPage(9)">
+                <i class="fas fa-play"></i> Mulai Game
+            </button>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(7)">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+    </div>
+    
+    <!-- Page 9: Game 1 Question 1 -->
+    <div id="page9" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1><i class="fas fa-font"></i> Game 1: Tebak Kata</h1>
+            <h2>Pertanyaan 1 dari 4</h2>
+        </div>
+        
+        <div class="game-container">
+            <div class="comic-container">
+                <div class="character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                    <div class="comic-bubble">
+                        <p>Apa nama alat ini yang digunakan untuk mengukur tekanan?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 替换为文字描述 -->
+            <div class="word-description">
+                <p><strong>Deskripsi:</strong></p>
+                <p>Alat ini digunakan untuk mengukur tekanan dalam sistem hidrolik dan pneumatik. Alat ini memiliki jarum penunjuk yang menunjukkan besarnya tekanan yang diukur. Sering digunakan dalam industri dan laboratorium untuk memantau tekanan fluida.</p>
+            </div>
+            
+            <div class="word-length">
+                _ _ _ _ _ _ _ _ _
+            </div>
+            
+            <div class="hint-box">
+                <p><strong>Petunjuk:</strong> Kata ini dimulai dengan huruf "M" dan memiliki 9 huruf.</p>
+            </div>
+            
+            <div class="comic-container">
+                <div class="character">
+                    <div class="comic-bubble">
+                        <p>Coba tebak kata yang sesuai dengan deskripsi di atas!</p>
+                    </div>
+                    <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+                </div>
+            </div>
+            
+            <input type="text" id="answer1" class="game-input" placeholder="Masukkan jawaban Anda...">
+            
+            <button class="submit-btn" onclick="checkAnswer(1, 'manometer')">
+                <i class="fas fa-check"></i> Periksa Jawaban
+            </button>
+            
+            <div id="feedback1" class="feedback"></div>
+            
+            <button id="nextBtn1" class="nav-btn next-btn" style="display: none;" onclick="showPage(10)">
+                Selanjutnya <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(8)">
+            <i class="fas fa-arrow-left"></i> Sebelumnya
+        </button>
+    </div>
+    
+    <!-- Page 10: Game 1 Question 2-4 and Results -->
+    <div id="page10" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1><i class="fas fa-font"></i> Game 1: Tebak Kata</h1>
+            <h2 id="questionTitle">Pertanyaan 2 dari 4</h2>
+        </div>
+        
+        <div class="game-container">
+            <div id="questionContainer">
+                <!-- Questions will be dynamically loaded here -->
+            </div>
+            
+            <div id="resultsContainer" style="display: none;">
+                <div class="score-display">
+                    <p>Skor Anda: <span id="finalScore">0</span>/4</p>
+                </div>
+                
+                <h4>Hasil Jawaban:</h4>
+                <div id="resultsList"></div>
+                
+                <button class="submit-btn" onclick="resetGame1()">
+                    <i class="fas fa-redo"></i> Main Lagi
+                </button>
+                
+                <button class="nav-btn" onclick="showPage(7)">
+                    Kembali ke Pilih Game <i class="fas fa-gamepad"></i>
+                </button>
+            </div>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(9)">
+            <i class="fas fa-arrow-left"></i> Sebelumnya
+        </button>
+    </div>
+    
+    <!-- Page 11: Game 2 Introduction -->
+    <div id="page11" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1><i class="fas fa-layer-group"></i> Game 2: Kartu Memori</h1>
+            <h2>Tekanan Hidrostatis</h2>
+        </div>
+        
+        <div class="game-container">
+            <div class="game-characters">
+                <div class="game-character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan">
+                    <p>Siswa Perempuan</p>
+                </div>
+                <div class="game-character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki">
+                    <p>Siswa Laki-laki</p>
+                </div>
+            </div>
+            
+            <div class="comic-container">
+                <div class="character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                    <div class="comic-bubble">
+                        <p>Hai! Apakah kamu siap untuk bermain game kartu memori tentang tekanan hidrostatis?</p>
+                    </div>
+                </div>
+                
+                <div class="character">
+                    <div class="comic-bubble">
+                        <p>Tentu! Game ini akan menguji pemahamanmu tentang rumus, simbol, dan satuan dalam persamaan tekanan hidrostatis.</p>
+                    </div>
+                    <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+                </div>
+                
+                <div class="character">
+                    <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                    <div class="comic-bubble">
+                        <p>Bagaimana cara memainkannya?</p>
+                    </div>
+                </div>
+                
+                <div class="character">
+                    <div class="comic-bubble">
+                        <p>Game ini memiliki 3 fase. Fase 1: Kamu punya 5 menit untuk mempelajari besaran-besaran dalam persamaan tekanan hidrostatis. Fase 2: Kartu akan dibuka selama 1 menit untuk menentukan pasangan dan menghafalkan letaknya. Fase 3: Kamu punya 4 menit untuk mencocokkan kartu yang benar.</p>
+                    </div>
+                    <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+                </div>
+            </div>
+            
+            <button class="submit-btn" onclick="showPage(12)">
+                <i class="fas fa-play"></i> Mulai Game
+            </button>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(7)">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+    </div>
+    
+    <!-- Page 12: Game 2 Phase 1 - Study -->
+    <div id="page12" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1><i class="fas fa-layer-group"></i> Game 2: Kartu Memori</h1>
+            <h2>Fase 1: Studi</h2>
+        </div>
+        
+        <div class="game-container">
+            <div class="phase-indicator">
+                <i class="fas fa-book"></i> Fase 1: Pelajari Besaran-Besaran
+            </div>
+            
+            <div class="timer-container">
+                Waktu Tersisa: <span id="phase1Timer">5:00</span>
+            </div>
+            
+            <div class="study-material">
+                <h3>Persamaan Tekanan Hidrostatis</h3>
+                <div class="formula-display">
+                    P = ρ × g × h
+                </div>
+                
+                <div class="variable-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Simbol</th>
+                                <th>Nama Besaran</th>
+                                <th>Satuan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P</td>
+                                <td>Tekanan Hidrostatis</td>
+                                <td>Pascal (Pa) atau N/m²</td>
+                            </tr>
+                            <tr>
+                                <td>ρ</td>
+                                <td>Massa Jenis Fluida</td>
+                                <td>kg/m³</td>
+                            </tr>
+                            <tr>
+                                <td>g</td>
+                                <td>Percepatan Gravitasi</td>
+                                <td>m/s²</td>
+                            </tr>
+                            <tr>
+                                <td>h</td>
+                                <td>Kedalaman</td>
+                                <td>m</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="game-instructions">
+                    <p>Pelajari dengan baik besaran-besaran di atas! Kamu akan membutuhkannya di fase berikutnya.</p>
+                    <p>Setelah waktu habis, kamu akan masuk ke fase 2.</p>
+                </div>
+            </div>
+            
+            <button id="startPhase2Btn" class="submit-btn" style="display: none;" onclick="showPage(13)">
+                <i class="fas fa-forward"></i> Lanjut ke Fase 2
+            </button>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(11)">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+    </div>
+    
+    <!-- Page 13: Game 2 Phase 2 - Memorize -->
+    <div id="page13" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1><i class="fas fa-layer-group"></i> Game 2: Kartu Memori</h1>
+            <h2>Fase 2: Hafalkan Posisi Kartu</h2>
+        </div>
+        
+        <div class="game-container">
+            <div class="phase-indicator">
+                <i class="fas fa-eye"></i> Fase 2: Hafalkan Posisi Kartu
+            </div>
+            
+            <div class="timer-container">
+                Waktu Tersisa: <span id="phase2Timer">1:00</span>
+            </div>
+            
+            <div class="game-instructions">
+                <p>Perhatikan baik-baik posisi setiap kartu! Kamu punya 1 menit untuk menghafalkan posisi kartu-kartu ini.</p>
+                <p>Cocokkan kartu yang berpasangan (simbol dengan nama besaran, atau simbol dengan satuan).</p>
+            </div>
+            
+            <div class="cards-container" id="phase2Cards">
+                <!-- Cards will be dynamically generated here -->
+            </div>
+            
+            <button id="startPhase3Btn" class="submit-btn" style="display: none;" onclick="showPage(14)">
+                <i class="fas fa-forward"></i> Lanjut ke Fase 3
+            </button>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(12)">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+    </div>
+    
+    <!-- Page 14: Game 2 Phase 3 - Match -->
+    <div id="page14" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1><i class="fas fa-layer-group"></i> Game 2: Kartu Memori</h1>
+            <h2>Fase 3: Cocokkan Kartu</h2>
+        </div>
+        
+        <div class="game-container">
+            <div class="phase-indicator">
+                <i class="fas fa-gamepad"></i> Fase 3: Cocokkan Kartu
+            </div>
+            
+            <div class="timer-container">
+                Waktu Tersisa: <span id="phase3Timer">4:00</span>
+            </div>
+            
+            <div class="game-instructions">
+                <p>Sekarang waktunya mencocokkan kartu! Klik dua kartu yang menurutmu berpasangan.</p>
+                <p>Kamu punya 4 menit untuk mencocokkan semua kartu.</p>
+            </div>
+            
+            <div class="score-display">
+                Pasangan Benar: <span id="matchCount">0</span>/10
+            </div>
+            
+            <div class="cards-container" id="phase3Cards">
+                <!-- Cards will be dynamically generated here -->
+            </div>
+            
+            <button id="showResultsBtn2" class="submit-btn" style="display: none;" onclick="showGame2Results()">
+                <i class="fas fa-trophy"></i> Lihat Hasil
+            </button>
+        </div>
+        
+        <button class="nav-btn prev-btn" onclick="showPage(13)">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+    </div>
+    
+    <!-- Page 15: Game 2 Results -->
+    <div id="page15" class="page">
+        <button class="exit-btn" onclick="exitLKPD()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="header">
+            <h1><i class="fas fa-layer-group"></i> Game 2: Kartu Memori</h1>
+            <h2>Hasil</h2>
+        </div>
+        
+        <div class="game-container">
+            <div class="score-display">
+                <p>Skor Anda: <span id="finalScore2">0</span>/10</p>
+            </div>
+            
+            <div id="game2Results">
+                <!-- Results will be dynamically loaded here -->
+            </div>
+            
+            <button class="submit-btn" onclick="resetGame2()">
+                <i class="fas fa-redo"></i> Main Lagi
+            </button>
+            
+            <button class="nav-btn" onclick="showPage(7)">
+                Kembali ke Pilih Game <i class="fas fa-gamepad"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Modal for Capaian Pembelajaran -->
+    <div class="modal fade" id="capaianModal" tabindex="-1" aria-labelledby="capaianModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="capaianModalLabel">Capaian Pembelajaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="content-box">
+                        <h4>Setelah mempelajari materi ini, peserta didik diharapkan dapat:</h4>
+                        <ul>
+                            <li>Memahami konsep tekanan hidrostatis dan faktor-faktor yang memengaruhinya</li>
+                            <li>Menerapkan rumus tekanan hidrostatis untuk menyelesaikan masalah terkait</li>
+                            <li>Menganalisis pengaruh kedalaman terhadap tekanan hidrostatis</li>
+                            <li>Menjelaskan penerapan tekanan hidrostatis dalam kehidupan sehari-hari</li>
+                            <li>Melakukan praktikum simulasi untuk memahami konsep tekanan hidrostatis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Materi -->
+    <div class="modal fade" id="materiModal" tabindex="-1" aria-labelledby="materiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="materiModalLabel">Materi Tekanan Hidrostatis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="content-box">
+                        <h4>Pengertian Tekanan Hidrostatis</h4>
+                        <p>Tekanan hidrostatis adalah tekanan yang dialami oleh benda di dalam fluida (cairan atau gas) yang disebabkan oleh berat fluida di atasnya. Tekanan ini bekerja pada segala arah dan besarnya sebanding dengan kedalaman.</p>
+                        
+                        <h4>Rumus Tekanan Hidrostatis</h4>
+                        <div class="formula">
+                            P = ρ × g × h
+                        </div>
+                        <p>Dimana:</p>
+                        <ul>
+                            <li>P = Tekanan hidrostatis (Pascal atau N/m²)</li>
+                            <li>ρ (rho) = Massa jenis fluida (kg/m³)</li>
+                            <li>g = Percepatan gravitasi (m/s²)</li>
+                            <li>h = Kedalaman dari permukaan fluida (m)</li>
+                        </ul>
+                        
+                        <h4>Faktor-faktor yang Mempengaruhi Tekanan Hidrostatis</h4>
+                        <ul>
+                            <li>Massa jenis fluida (ρ): Semakin besar massa jenis fluida, semakin besar tekanan hidrostatisnya</li>
+                            <li>Kedalaman (h): Semakin dalam posisi benda dalam fluida, semakin besar tekanan yang dialami</li>
+                            <li>Percepatan gravitasi (g): Nilai konstan di bumi sekitar 9,8 m/s²</li>
+                        </ul>
+                        
+                        <h4>Contoh Soal</h4>
+                        <div class="example">
+                            <p><strong>Soal:</strong> Sebuah akuarium berisi air dengan massa jenis 1000 kg/m³. Seekor ikan berada pada kedalaman 50 cm di dalam akuarium. Hitunglah tekanan hidrostatis yang dialami ikan tersebut!</p>
+                            <p><strong>Penyelesaian:</strong></p>
+                            <p>Diketahui:</p>
+                            <ul>
+                                <li>ρ = 1000 kg/m³</li>
+                                <li>h = 50 cm = 0,5 m</li>
+                                <li>g = 9,8 m/s²</li>
+                            </ul>
+                            <p>Ditanya: P = ?</p>
+                            <p>Jawab:</p>
+                            <p>P = ρ × g × h</p>
+                            <p>P = 1000 × 9,8 × 0,5</p>
+                            <p>P = 4900 Pascal</p>
+                            <p>Jadi, tekanan hidrostatis yang dialami ikan adalah 4900 Pascal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Praktikum -->
+    <div class="modal fade" id="praktikumModal" tabindex="-1" aria-labelledby="praktikumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="praktikumModalLabel">Praktikum Menggunakan PhET</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="content-box">
+                        <h4>Tujuan Praktikum</h4>
+                        <p>Memahami konsep tekanan hidrostatis melalui simulasi interaktif dan mengamati pengaruh kedalaman terhadap tekanan dalam fluida.</p>
+                        
+                        <h4>Prosedur Percobaan</h4>
+                        <ol class="procedure">
+                            <li>Buka simulasi PhET "Under Pressure" melalui link berikut: <a href="https://phet.colorado.edu/en/simulations/under-pressure" target="_blank">https://phet.colorado.edu/en/simulations/under-pressure</a></li>
+                            <li>Pilih tab "Fluids" untuk memulai eksplorasi tekanan hidrostatis.</li>
+                            <li>Atur jenis fluida yang ingin digunakan (air, minyak, atau gasoline).</li>
+                            <li>Tambahkan gauge meter untuk mengukur tekanan pada berbagai kedalaman.</li>
+                            <li>Amati perubahan tekanan saat kedalaman gauge meter diubah.</li>
+                            <li>Catat nilai tekanan pada beberapa kedalaman yang berbeda.</li>
+                            <li>Ulangi percobaan dengan jenis fluida yang berbeda.</li>
+                            <li>Bandingkan hasil pengukuran tekanan untuk berbagai jenis fluida pada kedalaman yang sama.</li>
+                        </ol>
+                        
+                        <h4>Pertanyaan Analisis</h4>
+                        <ol>
+                            <li>Bagaimana hubungan antara kedalaman dan tekanan hidrostatis?</li>
+                            <li>Fluida mana yang menghasilkan tekanan terbesar pada kedalaman yang sama? Mengapa?</li>
+                            <li>Apakah tekanan hidrostatis berubah jika kita mengubah luas penampang wadah? Jelaskan!</li>
+                        </ol>
+                        
+                        <div class="text-center mt-4">
+                            <a href="https://phet.colorado.edu/en/simulations/under-pressure" target="_blank" class="btn btn-primary">
+                                <i class="fas fa-external-link-alt"></i> Buka Simulasi PhET
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Profil Pengembang -->
+    <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profilModalLabel">Profil Pengembang</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="content-box">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <img src="https://picsum.photos/seed/teacher/200/200.jpg" alt="Profil Pengembang" class="img-fluid rounded-circle mb-3">
+                            </div>
+                            <div class="col-md-8">
+                                <h4>Dr. Siti Nurhaliza, M.Pd.</h4>
+                                <p><strong>Guru Fisika SMA Negeri 1 Jakarta</strong></p>
+                                <p>Dr. Siti Nurhaliza adalah seorang pendidik dengan pengalaman lebih dari 15 tahun dalam mengajar fisika di tingkat SMA. Beliau memiliki keahlian khusus dalam pengembangan media pembelajaran interaktif untuk konsep-konsep fisika yang abstrak.</p>
+                                <p>Pendidikan:</p>
+                                <ul>
+                                    <li>Doktor dalam Pendidikan Fisika - Universitas Indonesia</li>
+                                    <li>Magister Pendidikan Fisika - Universitas Negeri Jakarta</li>
+                                    <li>Sarjana Pendidikan Fisika - IKIP Jakarta</li>
+                                </ul>
+                                <p>Kontak:</p>
+                                <ul>
+                                    <li><i class="fas fa-envelope"></i> siti.nurhaliza@sman1jakarta.sch.id</li>
+                                    <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Game 1 variables
+        let game1Answers = {
+            1: { correct: false, userAnswer: '', correctAnswer: 'manometer' },
+            2: { correct: false, userAnswer: '', correctAnswer: 'dongkrak hidrolik' },
+            3: { correct: false, userAnswer: '', correctAnswer: 'kedalaman' },
+            4: { correct: false, userAnswer: '', correctAnswer: 'menara air' }
+        };
+        
+        let currentQuestion = 2;
+        
+        // Game 2 variables
+        let game2Cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let game2Timer = null;
+        let phase2Timer = null;
+        let phase3Timer = null;
+        
+        // Card data for Game 2
+        const cardData = [
+            { id: 1, type: 'symbol', content: 'P', pairId: 1 },
+            { id: 2, type: 'name', content: 'Tekanan Hidrostatis', pairId: 1 },
+            { id: 3, type: 'symbol', content: 'ρ', pairId: 2 },
+            { id: 4, type: 'name', content: 'Massa Jenis Fluida', pairId: 2 },
+            { id: 5, type: 'symbol', content: 'g', pairId: 3 },
+            { id: 6, type: 'name', content: 'Percepatan Gravitasi', pairId: 3 },
+            { id: 7, type: 'symbol', content: 'h', pairId: 4 },
+            { id: 8, type: 'name', content: 'Kedalaman', pairId: 4 },
+            { id: 9, type: 'symbol', content: 'P', pairId: 5 },
+            { id: 10, type: 'unit', content: 'Pascal (Pa)', pairId: 5 },
+            { id: 11, type: 'symbol', content: 'ρ', pairId: 6 },
+            { id: 12, type: 'unit', content: 'kg/m³', pairId: 6 },
+            { id: 13, type: 'symbol', content: 'g', pairId: 7 },
+            { id: 14, type: 'unit', content: 'm/s²', pairId: 7 },
+            { id: 15, type: 'symbol', content: 'h', pairId: 8 },
+            { id: 16, type: 'unit', content: 'm', pairId: 8 },
+            { id: 17, type: 'name', content: 'Tekanan Hidrostatis', pairId: 9 },
+            { id: 18, type: 'unit', content: 'N/m²', pairId: 9 },
+            { id: 19, type: 'name', content: 'Massa Jenis Fluida', pairId: 10 },
+            { id: 20, type: 'unit', content: 'kg/m³', pairId: 10 }
+        ];
+        
+        function showPage(pageNumber) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(`page${pageNumber}`).classList.add('active');
+            
+            // Initialize page-specific content
+            if (pageNumber === 10) {
+                loadGame1Question();
+            } else if (pageNumber === 12) {
+                startPhase1Timer();
+            } else if (pageNumber === 13) {
+                initializePhase2Cards();
+                startPhase2Timer();
+            } else if (pageNumber === 14) {
+                initializePhase3Cards();
+                startPhase3Timer();
+            }
+        }
+        
+        function showModal(type) {
+            let modalId;
+            
+            switch(type) {
+                case 'capaian':
+                    modalId = 'capaianModal';
+                    break;
+                case 'materi':
+                    modalId = 'materiModal';
+                    break;
+                case 'praktikum':
+                    modalId = 'praktikumModal';
+                    break;
+                case 'profil':
+                    modalId = 'profilModal';
+                    break;
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById(modalId));
+            modal.show();
+        }
+        
+        function exitLKPD() {
+            if (confirm('Apakah Anda yakin ingin keluar dari LKPD?')) {
+                // In a real application, this would redirect to the previous page or close the window
+                alert('Anda telah keluar dari LKPD. Terima kasih!');
+                // window.location.href = 'index.html'; // Uncomment this line to redirect
+            }
+        }
+        
+        // Game 1 functions
+        function checkAnswer(questionNumber, correctAnswer) {
+            const userAnswer = document.getElementById(`answer${questionNumber}`).value.toLowerCase().trim();
+            const feedback = document.getElementById(`feedback${questionNumber}`);
+            const nextBtn = document.getElementById(`nextBtn${questionNumber}`);
+            
+            // Store user answer
+            game1Answers[questionNumber].userAnswer = userAnswer;
+            
+            // Check if answer is correct
+            if (userAnswer === correctAnswer.toLowerCase() || 
+                (questionNumber === 2 && (userAnswer === 'dongkrak' || userAnswer === 'jack')) ||
+                (questionNumber === 3 && (userAnswer === 'depth' || userAnswer === 'kedalaman')) ||
+                (questionNumber === 4 && (userAnswer === 'water tower' || userAnswer === 'tower air' || userAnswer === 'menara'))) {
+                feedback.textContent = 'Benar! Jawaban Anda tepat.';
+                feedback.className = 'feedback correct';
+                game1Answers[questionNumber].correct = true;
+            } else {
+                feedback.textContent = `Salah! Jawaban yang benar adalah: ${correctAnswer}`;
+                feedback.className = 'feedback incorrect';
+                game1Answers[questionNumber].correct = false;
+            }
+            
+            feedback.style.display = 'block';
+            
+            // Show next button
+            nextBtn.style.display = 'block';
+        }
+        
+        function loadGame1Question() {
+            const questionContainer = document.getElementById('questionContainer');
+            const questionTitle = document.getElementById('questionTitle');
+            
+            if (currentQuestion <= 4) {
+                questionTitle.textContent = `Pertanyaan ${currentQuestion} dari 4`;
+                
+                let questionHTML = '';
+                
+                if (currentQuestion === 2) {
+                    questionHTML = `
+                        <div class="comic-container">
+                            <div class="character">
+                                <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                                <div class="comic-bubble">
+                                    <p>Apa nama benda ini yang bekerja berdasarkan prinsip tekanan hidrostatis?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="word-description">
+                            <p><strong>Deskripsi:</strong></p>
+                            <p>Alat mekanis yang menggunakan prinsip tekanan hidrostatis untuk mengangkat beban berat dengan gaya yang relatif kecil. Alat ini sering digunakan di bengkel untuk mengangkat mobil atau peralatan berat lainnya. Bekerja dengan cara menerapkan gaya pada fluida dalam sistem tertutup.</p>
+                        </div>
+                        
+                        <div class="word-length">
+                            _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                        </div>
+                        
+                        <div class="hint-box">
+                            <p><strong>Petunjuk:</strong> Kata ini dimulai dengan huruf "D" dan memiliki 14 huruf.</p>
+                        </div>
+                        
+                        <div class="comic-container">
+                            <div class="character">
+                                <div class="comic-bubble">
+                                    <p>Benda ini digunakan untuk mengangkat beban berat dengan gaya yang kecil.</p>
+                                </div>
+                                <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+                            </div>
+                        </div>
+                        
+                        <input type="text" id="answer2" class="game-input" placeholder="Masukkan jawaban Anda...">
+                        
+                        <button class="submit-btn" onclick="checkAnswer(2, 'dongkrak hidrolik')">
+                            <i class="fas fa-check"></i> Periksa Jawaban
+                        </button>
+                        
+                        <div id="feedback2" class="feedback"></div>
+                        
+                        <button id="nextBtn2" class="nav-btn next-btn" style="display: none;" onclick="nextQuestion()">
+                            Selanjutnya <i class="fas fa-arrow-right"></i>
+                        </button>
+                    `;
+                } else if (currentQuestion === 3) {
+                    questionHTML = `
+                        <div class="comic-container">
+                            <div class="character">
+                                <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                                <div class="comic-bubble">
+                                    <p>Apa nama besaran ini yang mempengaruhi besar tekanan hidrostatis?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="word-description">
+                            <p><strong>Deskripsi:</strong></p>
+                            <p>Besaran fisika yang menunjukkan jarak vertikal dari permukaan fluida ke titik yang diukur. Semakin besar nilai besaran ini, semakin besar pula tekanan hidrostatis yang dihasilkan. Dalam rumus P = ρ × g × h, besaran ini dilambangkan dengan huruf 'h'.</p>
+                        </div>
+                        
+                        <div class="word-length">
+                            _ _ _ _ _ _ _ _ _
+                        </div>
+                        
+                        <div class="hint-box">
+                            <p><strong>Petunjuk:</strong> Kata ini memiliki 8 huruf dan berhubungan dengan posisi vertikal dalam fluida.</p>
+                        </div>
+                        
+                        <div class="comic-container">
+                            <div class="character">
+                                <div class="comic-bubble">
+                                    <p>Besaran ini sangat penting dalam perhitungan tekanan hidrostatis.</p>
+                                </div>
+                                <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+                            </div>
+                        </div>
+                        
+                        <input type="text" id="answer3" class="game-input" placeholder="Masukkan jawaban Anda...">
+                        
+                        <button class="submit-btn" onclick="checkAnswer(3, 'kedalaman')">
+                            <i class="fas fa-check"></i> Periksa Jawaban
+                        </button>
+                        
+                        <div id="feedback3" class="feedback"></div>
+                        
+                        <button id="nextBtn3" class="nav-btn next-btn" style="display: none;" onclick="nextQuestion()">
+                            Selanjutnya <i class="fas fa-arrow-right"></i>
+                        </button>
+                    `;
+                } else if (currentQuestion === 4) {
+                    questionHTML = `
+                        <div class="comic-container">
+                            <div class="character">
+                                <img src="https://z-cdn-media.chatglm.cn/files/9cea2733-8cdf-4ea9-8ded-d51179548877_character_no_bg2.png?auth_key=1762072946-cef09abdd08e47f8bef95e7e7201f618-0-6ffd0e240a82aa02931a4ff75d0c9507" alt="Siswa Perempuan" class="character-img">
+                                <div class="comic-bubble">
+                                    <p>Apa nama sistem ini yang menggunakan tekanan air untuk distribusi?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="word-description">
+                            <p><strong>Deskripsi:</strong></p>
+                            <p>Struktur tinggi yang digunakan untuk menyimpan air pada ketinggian tertentu. Air yang tersimpan pada ketinggian ini menciptakan tekanan hidrostatis yang dapat digunakan untuk mendistribusikan air ke rumah-rumah atau bangunan lainnya tanpa memerlukan pompa tambahan.</p>
+                        </div>
+                        
+                        <div class="word-length">
+                            _ _ _ _ _ _ _ _ _
+                        </div>
+                        
+                        <div class="hint-box">
+                            <p><strong>Petunjuk:</strong> Kata ini dimulai dengan huruf "M" dan memiliki 9 huruf.</p>
+                        </div>
+                        
+                        <div class="comic-container">
+                            <div class="character">
+                                <div class="comic-bubble">
+                                    <p>Sistem ini menyimpan air di ketinggian untuk menciptakan tekanan.</p>
+                                </div>
+                                <img src="https://z-cdn-media.chatglm.cn/files/87ccf32b-c2c2-4f10-af04-b93e04fdade2_pasted_image_1762069331675.png?auth_key=1762072946-8046dc1669f4418cbf5af5b44c26acd5-0-0b8cc9d497202f3a741e17217b236d30" alt="Siswa Laki-laki" class="character-img">
+                            </div>
+                        </div>
+                        
+                        <input type="text" id="answer4" class="game-input" placeholder="Masukkan jawaban Anda...">
+                        
+                        <button class="submit-btn" onclick="checkAnswer(4, 'menara air')">
+                            <i class="fas fa-check"></i> Periksa Jawaban
+                        </button>
+                        
+                        <div id="feedback4" class="feedback"></div>
+                        
+                        <button id="showResultsBtn" class="submit-btn" style="display: none;" onclick="showGame1Results()">
+                            <i class="fas fa-trophy"></i> Lihat Hasil
+                        </button>
+                    `;
+                }
+                
+                questionContainer.innerHTML = questionHTML;
+            } else {
+                showGame1Results();
+            }
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            loadGame1Question();
+        }
+        
+        function showGame1Results() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const finalScore = document.getElementById('finalScore');
+            const resultsList = document.getElementById('resultsList');
+            const questionContainer = document.getElementById('questionContainer');
+            
+            // Calculate score
+            let score = 0;
+            for (let i = 1; i <= 4; i++) {
+                if (game1Answers[i].correct) {
+                    score++;
+                }
+            }
+            
+            // Hide question container and show results
+            questionContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            // Display score
+            finalScore.textContent = score;
+            
+            // Display results
+            resultsList.innerHTML = '';
+            for (let i = 1; i <= 4; i++) {
+                const resultItem = document.createElement('div');
+                resultItem.className = `result-item ${game1Answers[i].correct ? 'correct' : 'incorrect'}`;
+                resultItem.innerHTML = `
+                    <span>Pertanyaan ${i}: ${game1Answers[i].correctAnswer}</span>
+                    <span>${game1Answers[i].correct ? '✓ Benar' : '✗ Salah'}</span>
+                `;
+                resultsList.appendChild(resultItem);
+            }
+        }
+        
+        function resetGame1() {
+            // Reset game answers
+            for (let i = 1; i <= 4; i++) {
+                game1Answers[i].correct = false;
+                game1Answers[i].userAnswer = '';
+            }
+            
+            currentQuestion = 2;
+            
+            // Reset UI
+            document.getElementById('questionContainer').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            
+            // Go back to game introduction
+            showPage(8);
+        }
+        
+        // Game 2 functions
+        function startPhase1Timer() {
+            let timeLeft = 300; // 5 minutes in seconds
+            const timerElement = document.getElementById('phase1Timer');
+            
+            game2Timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(game2Timer);
+                    document.getElementById('startPhase2Btn').style.display = 'block';
+                }
+                
+                timeLeft--;
+            }, 1000);
+        }
+        
+        function initializePhase2Cards() {
+            const cardsContainer = document.getElementById('phase2Cards');
+            cardsContainer.innerHTML = '';
+            
+            // Shuffle cards
+            const shuffledCards = [...cardData].sort(() => Math.random() - 0.5);
+            game2Cards = shuffledCards;
+            
+            // Create card elements
+            shuffledCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card flipped';
+                cardElement.textContent = card.content;
+                cardElement.dataset.id = card.id;
+                cardsContainer.appendChild(cardElement);
+            });
+        }
+        
+        function startPhase2Timer() {
+            let timeLeft = 60; // 1 minute in seconds
+            const timerElement = document.getElementById('phase2Timer');
+            
+            phase2Timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(phase2Timer);
+                    document.getElementById('startPhase3Btn').style.display = 'block';
+                }
+                
+                timeLeft--;
+            }, 1000);
+        }
+        
+        function initializePhase3Cards() {
+            const cardsContainer = document.getElementById('phase3Cards');
+            cardsContainer.innerHTML = '';
+            
+            // Reset game state
+            flippedCards = [];
+            matchedPairs = 0;
+            document.getElementById('matchCount').textContent = '0';
+            
+            // Create card elements
+            game2Cards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.textContent = '?';
+                cardElement.dataset.id = card.id;
+                cardElement.dataset.pairId = card.pairId;
+                cardElement.addEventListener('click', flipCard);
+                cardsContainer.appendChild(cardElement);
+            });
+        }
+        
+        function startPhase3Timer() {
+            let timeLeft = 240; // 4 minutes in seconds
+            const timerElement = document.getElementById('phase3Timer');
+            
+            phase3Timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (timeLeft <= 0 || matchedPairs === 10) {
+                    clearInterval(phase3Timer);
+                    endGame2();
+                }
+                
+                timeLeft--;
+            }, 1000);
+        }
+        
+        function flipCard(event) {
+            const card = event.target;
+            
+            // Prevent flipping if card is already flipped or matched
+            if (card.classList.contains('flipped') || card.classList.contains('matched') || flippedCards.length >= 2) {
+                return;
+            }
+            
+            // Find card data
+            const cardId = parseInt(card.dataset.id);
+            const cardData = game2Cards.find(c => c.id === cardId);
+            
+            // Flip the card
+            card.classList.add('flipped');
+            card.textContent = cardData.content;
+            flippedCards.push(card);
+            
+            // Check for match if two cards are flipped
+            if (flippedCards.length === 2) {
+                const card1 = flippedCards[0];
+                const card2 = flippedCards[1];
+                
+                if (card1.dataset.pairId === card2.dataset.pairId) {
+                    // Match found
+                    setTimeout(() => {
+                        card1.classList.add('matched');
+                        card2.classList.add('matched');
+                        card1.classList.remove('flipped');
+                        card2.classList.remove('flipped');
+                        flippedCards = [];
+                        matchedPairs++;
+                        document.getElementById('matchCount').textContent = matchedPairs;
+                        
+                        // Check if all pairs are matched
+                        if (matchedPairs === 10) {
+                            clearInterval(phase3Timer);
+                            endGame2();
+                        }
+                    }, 500);
+                } else {
+                    // No match
+                    setTimeout(() => {
+                        card1.classList.remove('flipped');
+                        card2.classList.remove('flipped');
+                        card1.textContent = '?';
+                        card2.textContent = '?';
+                        flippedCards = [];
+                    }, 1000);
+                }
+            }
+        }
+        
+        function endGame2() {
+            // Disable all cards
+            const cards = document.querySelectorAll('#phase3Cards .card');
+            cards.forEach(card => {
+                card.classList.add('disabled');
+                card.removeEventListener('click', flipCard);
+            });
+            
+            // Show results button
+            document.getElementById('showResultsBtn2').style.display = 'block';
+        }
+        
+        function showGame2Results() {
+            showPage(15);
+            
+            const finalScore = document.getElementById('finalScore2');
+            const resultsContainer = document.getElementById('game2Results');
+            
+            // Display score
+            finalScore.textContent = matchedPairs;
+            
+            // Generate results message
+            let message = '';
+            if (matchedPairs === 10) {
+                message = '<div class="feedback correct">Luar biasa! Kamu berhasil mencocokkan semua pasangan kartu!</div>';
+            } else if (matchedPairs >= 7) {
+                message = '<div class="feedback correct">Bagus! Kamu berhasil mencocokkan sebagian besar pasangan kartu.</div>';
+            } else if (matchedPairs >= 4) {
+                message = '<div class="feedback incorrect">Cukup baik. Terus berlatih untuk meningkatkan kemampuanmu!</div>';
+            } else {
+                message = '<div class="feedback incorrect">Butuh lebih banyak latihan. Jangan menyerah!</div>';
+            }
+            
+            resultsContainer.innerHTML = message;
+        }
+        
+        function resetGame2() {
+            // Reset game state
+            game2Cards = [];
+            flippedCards = [];
+            matchedPairs = 0;
+            
+            // Clear timers
+            if (game2Timer) clearInterval(game2Timer);
+            if (phase2Timer) clearInterval(phase2Timer);
+            if (phase3Timer) clearInterval(phase3Timer);
+            
+            // Go back to game introduction
+            showPage(11);
+        }
+    </script>
+</body>
+</html>
